@@ -3,382 +3,342 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>هدية بسيطة</title>
+    <title>هدية بسيطة</title>
 
-<style>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
 
-/* ====== RESET ======= */
-html, body{
-  margin:0;
-  padding:0;
-  min-height:100%;
-}
+        body {
+            font-family: Tahoma, Arial;
+            color: white;
+            background: url("Background.png") center/cover no-repeat;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-/* ===== الخلفية ===== */
-body{
-  font-family:Tahoma, Arial;
-  color:white;
-  background:url("Background.png") center/cover no-repeat;
-  overflow-x:hidden;
-  min-height:100vh;
-  position:relative;
-}
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .45);
+            z-index: 0;
+            pointer-events: none;
+        }
 
-/* ===== تغميق الخلفية ثابت ===== */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.45);
-  z-index:0;
-  pointer-events:none;
-}
+        /* شاشة الباسورد */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
 
-/* ===== أول شاشة ===== */
-.hero{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:relative;
-  z-index:2;
-}
+        .hearts {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
 
-/* ===== قلوب طايرة ===== */
-.hearts{
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-  z-index:1;
-}
+        .heart {
+            position: absolute;
+            color: #ff9ac7;
+            opacity: .8;
+            animation: floatUp 8s linear infinite;
+        }
 
-.heart{
-  position:absolute;
-  color:#ff9ac7;
-  opacity:.8;
-  animation:floatUp 8s linear infinite;
-}
+        @keyframes floatUp {
+            from {
+                transform: translateY(100vh);
+            }
 
-@keyframes floatUp{
-  from{ transform:translateY(100vh); }
-  to{ transform:translateY(-10vh); }
-}
+            to {
+                transform: translateY(-10vh);
+            }
+        }
 
-/* ===== الكروت ===== */
-.card{
-  background:rgba(255,192,203,.18);
-  padding:25px 30px;
-  border-radius:22px;
-  box-shadow:0 0 40px rgba(255,105,180,.35);
-  backdrop-filter:blur(12px);
-  text-align:center;
-  max-width:900px;
-  margin:auto;
+        /* الكروت */
+        .card {
+            background: rgba(255, 192, 203, .18);
+            padding: 25px 30px;
+            border-radius: 22px;
+            box-shadow: 0 0 40px rgba(255, 105, 180, .35);
+            backdrop-filter: blur(12px);
+            text-align: center;
+            max-width: 900px;
+            margin: 20px auto;
+        }
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
+        .card h2 {
+            color: #ffb6d5;
+            font-size: 26px;
+        }
 
-  position:relative;
-  z-index:2;
-}
+        .card p {
+            font-size: 18px;
+            line-height: 1.8;
+        }
 
-.card h2{
-  color:#ffb6d5;
-  margin:5px 0 10px;
-  font-size:26px;
-}
+        input {
+            padding: 10px 12px;
+            border: none;
+            border-radius: 10px;
+            min-width: 250px;
+            font-size: 16px;
+        }
 
-.card p{
-  line-height:1.9;
-  font-size:18px;
-}
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 10px;
+            background: #ff7aa2;
+            color: white;
+            cursor: pointer;
+        }
 
-/* ===== إدخال الباسورد ===== */
-input{
-  padding:10px 12px;
-  border:none;
-  border-radius:10px;
-  min-width:250px;
-  font-size:16px;
-}
+        .hidden {
+            display: none;
+        }
 
-button{
-  padding:10px 18px;
-  border:none;
-  border-radius:10px;
-  background:#ff7aa2;
-  color:white;
-  cursor:pointer;
-  font-size:16px;
-}
+        /* السلايدر الجديد */
+        .section {
+            display: none;
+            opacity: 0;
+           transform:scale(.96);
+           transition:opacity .35s ease, transform .35s ease;
 
-#msg{
-  color:#ffdcec;
-}
+        }
 
-/* ===== السلايدر ===== */
-.sections-wrapper{
-  width:100%;
-  max-width:1000px;
-  margin:40px auto;
-  position:relative;
-  min-height:650px;
-}
+        .section.show {
+            display: block;
+            opacity: 1;
+           opacity:1;
+            transform:scale(1);
+        }
 
-.sections-wrapper .card{
-  position:absolute;
-  inset:0;
-  width:90%;
-  max-width:850px;
-  margin:auto;
-  opacity:0;
-  transition:transform .45s ease, opacity .45s ease;
-}
+        /* الصور */
+        .gallery img {
+            max-width: 260px;
+            border-radius: 15px;
+            border: 3px solid #ffb3c6;
+            margin: 6px;
+        }
 
-.sections-wrapper .card.active{opacity:1;}
-.sections-wrapper .card.center{transform:translateX(0);}
-.sections-wrapper .card.hide-left{transform:translateX(-140%);}
-.sections-wrapper .card.hide-right{transform:translateX(140%);}
+        /* الفيديو */
+        video {
+            width: 100%;
+            max-width: 520px;
+            border-radius: 16px;
+        }
 
-/* ===== الصور ===== */
-.gallery img{
-  max-width:260px;
-  border-radius:15px;
-  border:3px solid #ffb3c6;
-  margin:8px;
-}
+        /* الأزرار */
+        .nav-btn {
+            margin: 20px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: none;
+            background: #ff7aa2;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
 
-/* ===== الفيديو ===== */
-video{
-  width:100%;
-  max-width:520px;
-  border-radius:16px;
-}
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
 
-/* ===== أزرار التنقل ===== */
-.nav-btn{
-  position:fixed;
-  top:50%;
-  transform:translateY(-50%);
-  background:#ff7aa2;
-  color:white;
-  border:none;
-  border-radius:50%;
-  width:44px;
-  height:44px;
-  font-size:22px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 0 15px rgba(255,105,180,.5);
-  cursor:pointer;
-  z-index:5;
-}
+        /* موبايل */
+        @media(max-width:768px) {
 
-#prevBtn{right:15px;}
-#nextBtn{left:15px;}
+            .card {
+                max-width: 96%;
+                padding: 16px;
+            }
 
-.nav-btn:disabled{
-  opacity:.35;
-  cursor:not-allowed;
-}
+            .card h2 {
+                font-size: 20px;
+            }
 
-.hidden{display:none;}
+            .card p {
+                font-size: 16px;
+            }
 
-/* ===== موبايل ===== */
-@media(max-width:768px){
+            video {
+                max-width: 100%;
+            }
 
-  .card{
-    max-width:95%;
-    padding:16px;
-  }
-
-  .card h2{font-size:20px;}
-  .card p{font-size:16px;}
-
-  .sections-wrapper{min-height:520px;}
-
-  .gallery img{max-width:100%;}
-
-  video{max-width:100%;}
-}
-
-</style>
+            .gallery img {
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- ===== شاشة الباسورد ===== -->
-<div class="hero" id="passwordSection">
+    <!-- شاشة الباسورد -->
+    <div class="hero" id="passwordSection">
 
-  <div class="hearts" id="heartContainer"></div>
+        <div class="hearts" id="heartContainer"></div>
 
-  <div class="card">
-    <h2>✨ اكتبي الباسورد يا حبيبتي ✨</h2>
-    <input type="password" id="passwordInput">
-    <button onclick="check()">دخول</button>
-    <div id="msg"></div>
-  </div>
+        <div class="card">
+            <h2>✨ اكتبي الباسورد يا حبيبتي ✨</h2>
+            <input type="password" id="passwordInput">
+            <button onclick="check()">دخول</button>
+            <div id="msg"></div>
+        </div>
 
-</div>
-
-<!-- ===== المحتوى ===== -->
-<div id="content" class="hidden">
-
-<button id="prevBtn" class="nav-btn" onclick="showCard(current-1)">›</button>
-<button id="nextBtn" class="nav-btn" onclick="showCard(current+1)">‹</button>
-
-<div class="sections-wrapper">
-
-  <!-- ===== كارت الرسالة ===== -->
-  <div class="card">
-    <h2>💌 رسالة لروحي و فؤادي</h2>
-                
-    <p>
-        حبيبتي بثينة، كل سنة وإنتي طيبة يا أجمل وأحن وأطيب وأرقى وأحلى وأذكى وأجمد وأروع وأحلى حاجة حصلتلي في حياتي ❤️
-        السنة اللي فاتت كانت مليانة تحديات وصعوبات، بس عديناها بكل حب وسعادة 🌸
-        بشكرك على كل لحظة حلوة قضيناها مع بعض، وعلى كل ضحكة وفرحة شاركناها 🤍
-        بتمنى السنة الجديدة تكون مليانة بالحب والفرح والنجاح ليكي وليا ولينا سوا 💕
-        ربنا يديم محبتنا ويخلينا لبعض دايمًا يا رب 🤲
-        بحبك أوي يا روحي ❤️
-    </p>
-                
-    <p>
-        i made this website after spending hours on learning html css and javascript just for make this for you darling🌹
-    </p>
-  </div>
-
-  <!-- ===== كارت الصور ===== -->
-  <div class="card">
-    <h2>📸 أكتر صور شوفتها</h2>
-
-    <div class="gallery">
-      <img src="images/WhatsApp Image 2025-12-29 at 7.21.49 PM.jpeg">
-      <img src="images/WhatsApp Image 2025-12-29 at 7.21.50 PM (1).jpeg">
-      <img src="images/WhatsApp Image 2025-12-29 at 7.21.50 PM.jpeg">
     </div>
 
-    <p>كل ما الدنيا تديق بيا كنت بخش اشوفها</p>
-  </div>
+    <!-- المحتوى -->
+    <div id="content" class="hidden">
 
-  <!-- ===== كارت الفيديو ===== -->
-  <div class="card">
-    <h2>🎥 فيديو مميز</h2>
+        <div class="nav-bar">
+            <button class="nav-btn" onclick="change(-1)">السابق</button>
+            <button class="nav-btn" onclick="change(1)">التالي</button>
+        </div>
 
-    <video controls playsinline height=600px>
-      <source src="videos/love (2).mp4" type="video/mp4">
-      متصفحك لا يدعم تشغيل الفيديو
-    </video>
-  </div>
+        <div class="section show">
+            <div class="card">
+                <h2>💌 رسالة لروحي و فؤادي</h2>
 
-  <!-- ===== كارت النهاية ===== -->
-  <div class="card">
-    <h2>💖 رسالة أخيرة</h2>
+                <p>
+                    حبيبتي بثينة، كل سنة وإنتي طيبة يا أجمل وأحن وأطيب وأرقى وأحلى وأذكى وأجمد وأروع وأحلى حاجة حصلتلي
+                    في حياتي ❤️
+                    السنة اللي فاتت كانت مليانة تحديات وصعوبات، بس عديناها بكل حب وسعادة 🌸
+                    بشكرك على كل لحظة حلوة قضيناها مع بعض، وعلى كل ضحكة وفرحة شاركناها 🤍
+                    بتمنى السنة الجديدة تكون مليانة بالحب والفرح والنجاح ليكي وليا ولينا سوا 💕
+                    ربنا يديم محبتنا ويخلينا لبعض دايمًا يا رب 🤲
+                    بحبك أوي يا روحي ❤️
+                </p>
 
-    <p>💓 مهما كنا بعاد هفضل أحبك 💓</p>
-    <p>💗 مهما كنا متخانقين هفضل أحبك 💗</p>
-    <p>💕 مهما كنت تعبان من السعي هفضل أحبك وأسعى عشانك أكتر وأكتر💕</p>
-    <p>🤍 ربنا يخليكي ليا ويجمعنا عاجلًا في الحلال يا رب 🤍</p>
-  </div>
+                <p>
+                    i made this website after spending hours on learning html css and javascript just for make this for
+                    you darling🌹
+                </p>
 
-</div>
+            </div>
+        </div>
 
-</div>
+        <div class="section">
+            <div class="card">
+                <h2>📸 أكتر صور شوفتها</h2>
 
-<script>
+                <div class="gallery">
+                    <img src="images/WhatsApp Image 2025-12-29 at 7.21.49 PM.jpeg">
+                    <img src="images/WhatsApp Image 2025-12-29 at 7.21.50 PM (1).jpeg">
+                    <img src="images/WhatsApp Image 2025-12-29 at 7.21.50 PM.jpeg">
+                </div>
 
-/* ===== الباسورد ===== */
-const correctPassword = "13/7";
-let attempts = 0;
+                <p>كل ما الدنيا تديق بيا كنت بخش اشوفها</p>
+            </div>
+        </div>
 
-const messages = [
- "الباسورد غلط يا حبيبتي ❤️",
- "يا قلبي الباسورد غلط 💋",
- "لسه غلط يا روحي",
- "انتي بثينة بجد؟ دا الامتحان شكله لحس مخك 😂",
- "مش هتقدري تدخلي كده يا قمر 😅",
- "آخر محاولة يا عسل",
- "اكتبي 13/7"
-];
+        <div class="section">
+            <div class="card">
+                <h2>🎥 فيديو مميز</h2>
 
-function check(){
-  const val = passwordInput.value;
-  if(val === correctPassword){
-    passwordSection.classList.add("hidden");
-    content.classList.remove("hidden");
-    initSwiper();
-    window.scrollTo(0,0);
-  }else{
-    msg.textContent = messages[Math.min(attempts,messages.length-1)];
-    attempts++;
-  }
-}
+                <video controls playsinline height=600px>
+                    <source src="videos/love (2).mp4" type="video/mp4">
+                </video>
 
-/* ===== القلوب المتحركة ===== */
-function spawnHearts(){
-  for(let i=0;i<14;i++){
-    let h=document.createElement("div");
-    h.className="heart";
-    h.textContent="❤";
-    h.style.left=Math.random()*100+"%";
-    h.style.animationDelay=Math.random()*6+"s";
-    h.style.fontSize=(16+Math.random()*20)+"px";
-    heartContainer.appendChild(h);
-  }
-}
-spawnHearts();
+            </div>
+        </div>
 
-/* ===== السلايدر ===== */
-let current=0;
-let cards;
+        <div class="section">
+            <div class="card">
+                <h2>💖 رسالة أخيرة</h2>
 
-function initSwiper(){
-  cards=document.querySelectorAll(".sections-wrapper .card");
-  cards.forEach((c,i)=>{
-    if(i===0) c.classList.add("active","center");
-    else c.classList.add("hide-right");
-  });
-  addSwipe();
-  updateButtons();
-}
+                <p>💓 مهما كنا بعاد هفضل أحبك 💓</p>
+                <p>💗 مهما كنا متخانقين هفضل أحبك 💗</p>
+                <p>💕 مهما كنت تعبان من السعي هفضل أحبك وأسعى عشانك أكتر وأكتر💕</p>
+                <p>🤍 ربنا يخليكي ليا ويجمعنا عاجلًا في الحلال يا رب 🤍</p>
+            </div>
+        </div>
 
-function showCard(i){
-  if(i<0||i>=cards.length) return;
+    </div>
 
-  cards.forEach(c=>c.classList.remove("active","center","hide-left","hide-right"));
+    <script>
 
-  cards.forEach((c,index)=>{
-    if(index<i) c.classList.add("hide-left");
-    else if(index>i) c.classList.add("hide-right");
-  });
+        const correctPassword = "13/7";
+        let attempts = 0;
 
-  cards[i].classList.add("active","center");
-  current=i;
-  updateButtons();
-}
+        const messages = [
+            "الباسورد غلط يا حبيبتي ❤️",
+            "يا قلبي الباسورد غلط 💋",
+            "لسه غلط يا روحي",
+            "انتي بثينة بجد؟ دا الامتحان شكله لحس مخك 😂",
+            "مش هتقدري تدخلي كده يا قمر 😅",
+            "آخر محاولة يا عسل",
+            "اكتبي 13/7"
+        ];
 
-function updateButtons(){
-  prevBtn.disabled=current===0;
-  nextBtn.disabled=current===cards.length-1;
-}
+        function check() {
+            const v = passwordInput.value;
+            if (v === correctPassword) {
+                passwordSection.classList.add("hidden");
+                content.classList.remove("hidden");
+            } else {
+                msg.textContent = messages[Math.min(attempts, messages.length - 1)];
+                attempts++;
+            }
+        }
 
-function addSwipe(){
-  let startX=0;
-  document.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
-  document.addEventListener("touchend",e=>{
-    let diff=e.changedTouches[0].clientX-startX;
-    if(diff>60) showCard(current-1);
-    if(diff<-60) showCard(current+1);
-  });
-}
+        /* القلوب */
+        function spawnHearts() {
+            for (let i = 0; i < 14; i++) {
+                let h = document.createElement("div");
+                h.className = "heart";
+                h.textContent = "❤";
+                h.style.left = Math.random() * 100 + "%";
+                h.style.animationDelay = Math.random() * 6 + "s";
+                h.style.fontSize = (16 + Math.random() * 20) + "px";
+                heartContainer.appendChild(h);
+            }
+        }
+        spawnHearts();
 
-</script>
+        /* السلايدر البسيط */
+        let index = 0;
+        const sections = document.querySelectorAll(".section");
+
+        function showSection(i) {
+            sections.forEach(s => s.classList.remove("show"));
+            sections[i].classList.add("show");
+        }
+
+        function change(dir) {
+            index += dir;
+            if (index < 0) index = 0;
+            if (index >= sections.length) index = sections.length - 1;
+            showSection(index);
+        }
+
+        /* سوايب بسيط */
+        let startX = 0;
+        document.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+        document.addEventListener("touchend", e => {
+            let diff = e.changedTouches[0].clientX - startX;
+            if (diff > 60) change(-1);
+            if (diff < -60) change(1);
+        });
+
+    </script>
 
 </body>
+
 </html>
