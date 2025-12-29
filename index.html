@@ -10,22 +10,24 @@
 
 <style>
 
+/* ====== RESET ======= */
 html, body{
   margin:0;
   padding:0;
   min-height:100%;
 }
 
-/* الخلفية */
+/* ===== الخلفية ===== */
 body{
   font-family:Tahoma, Arial;
   color:white;
   background:url("hearts-wallpaper.png") center/cover no-repeat;
   overflow-x:hidden;
   min-height:100vh;
+  position:relative;
 }
 
-/* تغميق */
+/* ===== تغميق الخلفية ثابت ===== */
 body::before{
   content:"";
   position:fixed;
@@ -35,7 +37,7 @@ body::before{
   pointer-events:none;
 }
 
-/* أول صفحة */
+/* ===== أول شاشة ===== */
 .hero{
   min-height:100vh;
   display:flex;
@@ -45,25 +47,27 @@ body::before{
   z-index:2;
 }
 
-/* قلوب */
+/* ===== قلوب طايرة ===== */
 .hearts{
   position:absolute;
   inset:0;
   overflow:hidden;
   z-index:1;
 }
+
 .heart{
   position:absolute;
   color:#ff9ac7;
   opacity:.8;
   animation:floatUp 8s linear infinite;
 }
+
 @keyframes floatUp{
-  from{ transform:translateY(100vh);}
-  to{ transform:translateY(-10vh);}
+  from{ transform:translateY(100vh); }
+  to{ transform:translateY(-10vh); }
 }
 
-/* الكروت */
+/* ===== الكروت ===== */
 .card{
   background:rgba(255,192,203,.18);
   padding:25px 30px;
@@ -71,14 +75,14 @@ body::before{
   box-shadow:0 0 40px rgba(255,105,180,.35);
   backdrop-filter:blur(12px);
   text-align:center;
-  max-width:850px;
+  max-width:900px;
   margin:auto;
 
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:10px;
+  gap:12px;
 
   position:relative;
   z-index:2;
@@ -89,12 +93,13 @@ body::before{
   margin:5px 0 10px;
   font-size:26px;
 }
+
 .card p{
   line-height:1.9;
   font-size:18px;
 }
 
-/* إدخال الباسورد */
+/* ===== إدخال الباسورد ===== */
 input{
   padding:10px 12px;
   border:none;
@@ -102,6 +107,7 @@ input{
   min-width:250px;
   font-size:16px;
 }
+
 button{
   padding:10px 18px;
   border:none;
@@ -111,14 +117,15 @@ button{
   cursor:pointer;
   font-size:16px;
 }
+
 #msg{
   color:#ffdcec;
 }
 
-/* السلايدر */
+/* ===== السلايدر ===== */
 .sections-wrapper{
   width:100%;
-  max-width:950px;
+  max-width:1000px;
   margin:40px auto;
   position:relative;
   min-height:650px;
@@ -128,10 +135,10 @@ button{
   position:absolute;
   inset:0;
   width:90%;
-  max-width:820px;
+  max-width:850px;
   margin:auto;
   opacity:0;
-  transition:.45s;
+  transition:transform .45s ease, opacity .45s ease;
 }
 
 .sections-wrapper .card.active{opacity:1;}
@@ -139,7 +146,7 @@ button{
 .sections-wrapper .card.hide-left{transform:translateX(-140%);}
 .sections-wrapper .card.hide-right{transform:translateX(140%);}
 
-/* صور */
+/* ===== الصور ===== */
 .gallery img{
   max-width:260px;
   border-radius:15px;
@@ -147,14 +154,14 @@ button{
   margin:8px;
 }
 
-/* فيديو */
+/* ===== الفيديو ===== */
 video{
   width:100%;
   max-width:520px;
   border-radius:16px;
 }
 
-/* أزرار */
+/* ===== أزرار التنقل ===== */
 .nav-btn{
   position:fixed;
   top:50%;
@@ -173,22 +180,32 @@ video{
   cursor:pointer;
   z-index:5;
 }
+
 #prevBtn{right:15px;}
 #nextBtn{left:15px;}
-.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+
+.nav-btn:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
 
 .hidden{display:none;}
 
-/* موبايل */
+/* ===== موبايل ===== */
 @media(max-width:768px){
+
   .card{
     max-width:95%;
     padding:16px;
   }
+
   .card h2{font-size:20px;}
   .card p{font-size:16px;}
+
   .sections-wrapper{min-height:520px;}
+
   .gallery img{max-width:100%;}
+
   video{max-width:100%;}
 }
 
@@ -197,6 +214,7 @@ video{
 
 <body>
 
+<!-- ===== شاشة الباسورد ===== -->
 <div class="hero" id="passwordSection">
 
   <div class="hearts" id="heartContainer"></div>
@@ -210,6 +228,7 @@ video{
 
 </div>
 
+<!-- ===== المحتوى ===== -->
 <div id="content" class="hidden">
 
 <button id="prevBtn" class="nav-btn" onclick="showCard(current-1)">›</button>
@@ -217,39 +236,55 @@ video{
 
 <div class="sections-wrapper">
 
+  <!-- ===== كارت الرسالة ===== -->
   <div class="card">
-    <h2>💌 رسالة لروحي و فؤادي</h2> <p> حبيبتي بثينة، كل سنة وإنتي طيبة يا أجمل وأحن وأطيب وأرقى وأحلى وأذكى وأجمد وأروع وأحلى حاجة حصلتلي في حياتي ❤️ السنة اللي فاتت كانت مليانة تحديات وصعوبات، بس عديناها بكل حب وسعادة 🌸 بشكرك على كل لحظة حلوة قضيناها مع بعض، وعلى كل ضحكة وفرحة شاركناها 🤍 بتمنى السنة الجديدة تكون مليانة بالحب والفرح والنجاح ليكي وليا ولينا سوا 💕 ربنا يديم محبتنا ويخلينا لبعض دايمًا يا رب 🤲 بحبك أوي يا روحي ❤️ </p> 
-    <p> i made this website after spending hours on learning html css and javascript just for make this for you darling🌹 </p>
+    <h2>💌 رسالة لروحي و فؤادي</h2>
+                
+    <p>
+        حبيبتي بثينة، كل سنة وإنتي طيبة يا أجمل وأحن وأطيب وأرقى وأحلى وأذكى وأجمد وأروع وأحلى حاجة حصلتلي في حياتي ❤️
+        السنة اللي فاتت كانت مليانة تحديات وصعوبات، بس عديناها بكل حب وسعادة 🌸
+        بشكرك على كل لحظة حلوة قضيناها مع بعض، وعلى كل ضحكة وفرحة شاركناها 🤍
+        بتمنى السنة الجديدة تكون مليانة بالحب والفرح والنجاح ليكي وليا ولينا سوا 💕
+        ربنا يديم محبتنا ويخلينا لبعض دايمًا يا رب 🤲
+        بحبك أوي يا روحي ❤️
+    </p>
+                
+    <p>
+        i made this website after spending hours on learning html css and javascript just for make this for you darling🌹
+    </p>
   </div>
 
+  <!-- ===== كارت الصور ===== -->
   <div class="card">
     <h2>📸 أكتر صور شوفتها</h2>
+
     <div class="gallery">
       <img src="images/WhatsApp Image 2025-12-29 at 7.21.49 PM.jpeg">
       <img src="images/WhatsApp Image 2025-12-29 at 7.21.50 PM (1).jpeg">
       <img src="images/WhatsApp Image 2025-12-29 at 7.21.50 PM.jpeg">
     </div>
-    <p>كل ما الدنيا تديق بيا كنت بخش اشوفها 🌸</p>
+
+    <p>كل ما الدنيا تديق بيا كنت بخش اشوفها</p>
   </div>
 
+  <!-- ===== كارت الفيديو ===== -->
   <div class="card">
     <h2>🎥 فيديو مميز</h2>
 
-    <video controls playsinline height=500px>
-      <source src="videos/love (2).mp4" type="video/mp4">
+    <video controls playsinline>
+      <source src="videos/love.mp4" type="video/mp4">
       متصفحك لا يدعم تشغيل الفيديو
     </video>
-
   </div>
 
+  <!-- ===== كارت النهاية ===== -->
   <div class="card">
     <h2>💖 رسالة أخيرة</h2>
 
     <p>💓 مهما كنا بعاد هفضل أحبك 💓</p>
     <p>💗 مهما كنا متخانقين هفضل أحبك 💗</p>
-    <p>💕 هفضل أسعى عشانك دايمًا 💕</p>
-    <p>🤍 ربنا يجمعنا في الحلال 🤍</p>
-
+    <p>💕 مهما كنت تعبان من السعي هفضل أحبك وأسعى عشانك أكتر وأكتر💕</p>
+    <p>🤍 ربنا يخليكي ليا ويجمعنا عاجلًا في الحلال يا رب 🤍</p>
   </div>
 
 </div>
@@ -258,6 +293,7 @@ video{
 
 <script>
 
+/* ===== الباسورد ===== */
 const correctPassword = "13/7";
 let attempts = 0;
 
@@ -265,15 +301,15 @@ const messages = [
  "الباسورد غلط يا حبيبتي ❤️",
  "يا قلبي الباسورد غلط 💋",
  "لسه غلط يا روحي",
- "انتي بثينة بجد؟ 😂",
- "مش هتقدري تدخلي كده 😅",
+ "انتي بثينة بجد؟ دا الامتحان شكله لحس مخك 😂",
+ "مش هتقدري تدخلي كده يا قمر 😅",
  "آخر محاولة يا عسل",
  "اكتبي 13/7"
 ];
 
 function check(){
   const val = passwordInput.value;
-  if(val===correctPassword){
+  if(val === correctPassword){
     passwordSection.classList.add("hidden");
     content.classList.remove("hidden");
     initSwiper();
@@ -284,7 +320,7 @@ function check(){
   }
 }
 
-/* قلوب */
+/* ===== القلوب المتحركة ===== */
 function spawnHearts(){
   for(let i=0;i<14;i++){
     let h=document.createElement("div");
@@ -298,7 +334,7 @@ function spawnHearts(){
 }
 spawnHearts();
 
-/* سلايدر */
+/* ===== السلايدر ===== */
 let current=0;
 let cards;
 
